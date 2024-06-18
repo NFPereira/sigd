@@ -1,0 +1,16 @@
+.inputControl{
+    flex: 1 1 auto;
+    display: block;
+}
+input[type="text"], input[type="date"], input[type="password"]{
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 40px;
+    font-size: 14px;
+    padding-left: 1rem;
+}
+input[type="radio"]{
+    margin-top: 0px;
+    margin-right: 4px;
+}

@@ -19,6 +19,7 @@ import Tbody from '../../../components/Tbody';
 import Pagination from '../../../components/Pagination';
 import Navigator from '../../../components/Navigator';
 import Select from '../../../components/Select';
+import { FaRegEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 
 const initialForm = ({ id: 0, codigo: '', nome: '', ativo: true });
@@ -134,7 +135,7 @@ const TipoPessoa = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro de tipo de pessoa" />
+                    <Titulo title="Cadastro Tipo Pessoa" />
                     <Form>
                         <FormGroup>
                             <Label name="Código">
@@ -156,7 +157,7 @@ const TipoPessoa = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista de tipos de pessoas" />
+                    <Titulo title="Lista Tipo Pessoas" />
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -185,10 +186,10 @@ const TipoPessoa = () => {
                                 <Tr key={item.id}>
                                     <Td>{item.codigo}</Td>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className="toggleOn"/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" classe='botao editar' onclick={() => handleUpdate(item.id)}>Editar</Button>
-                                        <Button name="Excluir" classe='botao remover' onclick={() => handleDelete(item.id)}>Excluir</Button>
+                                    <FaRegEdit onClick={()=>handleUpdate(item.id)} className='edit'/>
+                                    <FaTrash onClick={() => handleDelete(item.id)} className='delete'/>
                                     </Td>
                                 </Tr>
                             ))}

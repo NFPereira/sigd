@@ -17,7 +17,8 @@ import FormRadio from '../../../components/FormRadio';
 import Span from '../../../components/Span';
 import Pagination from '../../../components/Pagination';
 import Navigator from '../../../components/Navigator';
-import Select from  '../../../components/Select';
+import Select from '../../../components/Select';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 const initialForms = ({ id: 0, codigo: '', nome: '', ativo: true });
 const NivelUsuario = () => {
@@ -36,12 +37,12 @@ const NivelUsuario = () => {
     }, []);
 
     //Pagination
-    const[itemsPerPage, setItemsPerPage] = useState(5);
-    const[currentPage, setCurrentPage] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [currentPage, setCurrentPage] = useState(0);
     const startIndex = itemsPerPage * currentPage;
     const endIndex = startIndex + itemsPerPage;
     const currentItems = items.slice(startIndex, endIndex);
-    const pages = Math.ceil(items.length / itemsPerPage);       
+    const pages = Math.ceil(items.length / itemsPerPage);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -116,14 +117,14 @@ const NivelUsuario = () => {
             })
     }
 
-    const handleCancel = (e) =>{
+    const handleCancel = (e) => {
         e.preventDefault();
         setNivelUsuario(initialForms);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setCurrentPage(0);
-    },[itemsPerPage]);
+    }, [itemsPerPage]);
 
     return (
         <>
@@ -155,17 +156,17 @@ const NivelUsuario = () => {
                     <Navigator>
                         <FormGroup>
                             <Label>
-                                <Select value={itemsPerPage} onchange={(e)=> setItemsPerPage(Number(e.target.value))}>
+                                <Select value={itemsPerPage} onchange={(e) => setItemsPerPage(Number(e.target.value))}>
                                     <option value={5}>5</option>
                                     <option value={10}>10</option>
                                     <option value={15}>15</option>
                                 </Select>
                             </Label>
                             <Label>
-                                <Input type="text" name="pesquisar" placeholder="Pesquisar"/>
+                                <Input type="text" name="pesquisar" placeholder="Pesquisar" />
                             </Label>
                         </FormGroup>
-                    </Navigator>                        
+                    </Navigator>
                     <Table classe="tabela">
                         <Thead>
                             <Tr>
@@ -180,10 +181,10 @@ const NivelUsuario = () => {
                                 <Tr key={item.id}>
                                     <Td>{item.codigo}</Td>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn' /> : <FaToggleOff className='toggleOff' />}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className='edit' onClick={() => handleUpdate(item.id)} />
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)} />
                                     </Td>
                                 </Tr>
                             ))}
@@ -191,11 +192,11 @@ const NivelUsuario = () => {
                     </Table>
                     {pages > 1 && (
                         <Pagination>
-                            {Array.from(Array(pages), (item, index)=>{
-                                return <Button classe={Number(index) === currentPage ? "botao btnPagination active" : "botao btnPagination"} key={index} name={Number(index)+1} value={Number(index)} onclick={(e)=> setCurrentPage(Number(e.target.value))} />
+                            {Array.from(Array(pages), (item, index) => {
+                                return <Button classe={Number(index) === currentPage ? "botao btnPagination active" : "botao btnPagination"} key={index} name={Number(index) + 1} value={Number(index)} onclick={(e) => setCurrentPage(Number(e.target.value))} />
                             })}
                         </Pagination>
-                    )}                           
+                    )}
                 </Main>
             </Container>
         </>

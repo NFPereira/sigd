@@ -17,6 +17,9 @@ import Tbody from '../../../components/Tbody';
 import Td from '../../../components/Td';
 import Button from '../../../components/Button';
 import Pagination from '../../../components/Pagination';
+import Navigator from '../../../components/Navigator';
+import Select from '../../../components/Select';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 const initialForms = ({ id: 0, codigo: '', nome: '', ativo: true });
 const FretePorContaItem = () => {
@@ -113,7 +116,7 @@ const FretePorContaItem = () => {
             })
             .catch(error => console.log("Erro ao consultar " + error))
 
-            console.log(url)
+        console.log(url)
 
     }
 
@@ -128,11 +131,12 @@ const FretePorContaItem = () => {
                 if (data) {
                     getFretePorConta();
                     setFretePorConta(initialForms);
+                    setCurrentPage(0);
                 }
             })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setCurrentPage(0);
     }, [itemsPerPage]);
 
@@ -140,7 +144,7 @@ const FretePorContaItem = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro frete por conta" />
+                    <Titulo title="Cadastro Frete por Conta" />
                     <Form>
                         <FormGroup>
                             <Label name="Código">
@@ -162,7 +166,21 @@ const FretePorContaItem = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista fretes por conta" />
+                    <Titulo title="Lista Frete por Conta" />
+                    <Navigator>
+                        <FormGroup>
+                            <Label>
+                                <Select value={itemsPerPage} onchange={(e) => setItemsPerPage(Number(e.target.value))}>
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={15}>15</option>
+                                </Select>
+                            </Label>
+                            <Label>
+                                <Input type="text" name="pesquisar" placeholder="Pesquisar" />
+                            </Label>
+                        </FormGroup>
+                    </Navigator>
                     <Table classe="tabela">
                         <Thead>
                             <Tr>
@@ -177,21 +195,21 @@ const FretePorContaItem = () => {
                                 <Tr key={index}>
                                     <Td>{item.codigo}</Td>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}
                         </Tbody>
                     </Table>
                     {pages > 1 && (
-                    <Pagination>
-                        {Array.from(Array(pages), (item, index)=>{
-                            return <Button classe={Number(index) === currentPage ? "botao btnPagination active" : "botao btnPagination"} key={index} name={Number(index)+ 1} value={Number(index)} onclick={(e)=> setCurrentPage(Number(e.target.value))} />
-                        })}
-                    </Pagination>
+                        <Pagination>
+                            {Array.from(Array(pages), (item, index) => {
+                                return <Button classe={Number(index) === currentPage ? "botao btnPagination active" : "botao btnPagination"} key={index} name={Number(index) + 1} value={Number(index)} onclick={(e) => setCurrentPage(Number(e.target.value))} />
+                            })}
+                        </Pagination>
                     )}
                 </Main>
             </Container>

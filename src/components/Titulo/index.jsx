@@ -1,8 +1,8 @@
 import styles from './styles.module.css';
 
-const Titulo = ({ title }) => {
+const Titulo = ({ title, icon }) => {
     return (
-        <div className={styles.titulo}>{title}</div>
+        <div className={styles.titulo}>{title}{icon}</div>
     )
 }
 

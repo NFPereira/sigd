@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './styles.module.css'
 
-const Label = ({ name, children }) => {
+const Label = ({ name, children, classe}) => {
     return (
-        <label>{name}{children}</label>
+        <label className={classe}>{name}{children}</label>
     )
 }
 

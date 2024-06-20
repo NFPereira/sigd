@@ -19,6 +19,7 @@ import Th from '../../../components/Th';
 import Tbody from '../../../components/Tbody';
 import Td from '../../../components/Td';
 import Pagination from '../../../components/Pagination';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 
 
@@ -240,10 +241,10 @@ const Cidades = () => {
                   <Td>{item.codigo}</Td>
                   <Td>{item.nome}</Td>
                   <Td>{item.idEstado}</Td>
-                  <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                  <Td>{item.ativo ? <FaToggleOn className='toggleOn' /> : <FaToggleOff className='toggleOff' />}</Td>
                   <Td>
-                    <Button name="Editar" onclick={() => handleUpdate(item.id)} classe='botao editar' />
-                    <Button name="Excluir" onclick={() => handleDelete(item.id)} classe='botao remover' />
+                    <FaEdit className='edit' onClick={() => handleUpdate(item.id)} />
+                    <FaTrash className='delete' onClick={() => handleDelete(item.id)} />
                   </Td>
                 </Tr>
               ))}

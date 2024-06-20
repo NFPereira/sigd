@@ -22,7 +22,8 @@ import Select from '../../../components/Select';
 import Navigator from '../../../components/Navigator';
 import Pagination from '../../../components/Pagination';
 
-
+//import icons
+import { FaEdit, FaRegEdit, FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
 
 const initialForms = ({ id: 0, codigo: '', nome: '', sigla: '', idPais: 0, nomePais: "SELECIONE", ativo: true });
 
@@ -49,7 +50,7 @@ const Estados = () => {
       .then((data) => setPaises(data))
       .catch((error) => console.log("Erro ao consultar" + error))
       .finally(
-        console.log("consultar retornada")
+        console.log("consulta retornada")
       );
   }
 
@@ -103,9 +104,10 @@ const Estados = () => {
     }
     else {
       const id = estados.id;
-      const url = `http://localhost:8080/api/Estado/${id}`;
 
-      fetch(url, {
+      console.log(estados);
+
+      fetch(`http://localhost:8080/api/Estado/${id}`, {
         method: "PUT",
         body: JSON.stringify(estados),
         mode: 'cors',
@@ -126,19 +128,15 @@ const Estados = () => {
     setEstados(initialForms);
   }
 
-  const handleEdit = (id) => {
+  const handleUpdate = (id) => {
 
     const url = `http://localhost:8080/api/estado/${id}`;
 
     fetch(url)
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        console.log(data)
-        setEstados(data);
-      });
-
+      .then(response=>response.json())
+      .then(data=>setEstados(data))
+      .catch(error=>console.log("Erro ao consultar"+ error))
+      .finally(console.log("consulta retornada"));
   };
 
   const handleDelete = (id) => {
@@ -173,7 +171,7 @@ const Estados = () => {
     <>
       <Container>
         <Main>
-          <Titulo title="Cadastro de estado" />
+          <Titulo title="Cadastro Estados" />
           <Form>
             <FormGroup>
               <Label name="Código">
@@ -206,7 +204,7 @@ const Estados = () => {
           </Form>
         </Main>
         <Main>
-          <Titulo title="Lista de estados" />
+          <Titulo title="Lista Estados" />
           <Navigator>
             <FormGroup>
               <Label>
@@ -238,10 +236,10 @@ const Estados = () => {
                   <Td>{item.codigo}</Td>
                   <Td>{item.nome}</Td>
                   <Td>{item.sigla}</Td>
-                  <Td>{item.ativo ? "SIM" : "NÃO"}</Td>
+                  <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                   <Td>
-                    <Button name="Editar" onclick={() => handleEdit(item.id)} classe='botao editar'>Editar</Button>
-                    <Button name="Excluir" onclick={() => handleDelete(item.id)} classe='botao remover'>Excluir</Button>
+                    <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                    <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                   </Td>
                 </Tr>
               ))}

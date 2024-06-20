@@ -29,6 +29,7 @@ import Clientes from './pages/Cadastros/Clientes'
 import Fornecedores from './pages/Cadastros/Fornecedores'
 import Usuario from './pages/Cadastros/Usuario'
 import Produto from './pages/Cadastros/Produto'
+import Login from './pages/Conta/Login'
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
         <Route path="/cadastros-produto" element={<Produto />} />
         <Route path="/cadastros-nivel-usuario" element={<NivelUsuario />} />
         <Route path="/cadastros-usuario" element={<Usuario />} />
+        <Route path="/conta/login" element={<Login/> }/>
       </Routes>
       <Footer />
     </Router>

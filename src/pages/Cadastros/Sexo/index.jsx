@@ -19,6 +19,7 @@ import FormRadio from '../../../components/FormRadio';
 import Span from '../../../components/Span';
 import Pagination from '../../../components/Pagination';
 import Select from '../../../components/Select';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 const initialForms = ({ id: 0, nome: '', sigla: '', ativo: true });
 
@@ -192,10 +193,10 @@ const Sexo = () => {
                                 <Tr key={item.id}>
                                     <Td>{item.nome}</Td>
                                     <Td>{item.sigla}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" onclick={() => handleUpdate(item.id)} classe="botao editar" />
-                                        <Button name="Excluir" onclick={() => handleDelete(item.id)} classe="botao remover" />
+                                        <FaEdit className='edit'  onClick={() => handleUpdate(item.id)}/>
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}

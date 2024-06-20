@@ -18,6 +18,7 @@ import Td from '../../../components/Td';
 import Pagination from '../../../components/Pagination';
 import Navigator from '../../../components/Navigator';
 import Select from '../../../components/Select';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 const initialForms = ({ id: 0, nome: '', ativo: true })
 const ClassificacaoFiscal = () => {
@@ -129,7 +130,7 @@ const ClassificacaoFiscal = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro Classificação Fiscal" />
+                    <Titulo title="Cadastrar Classificação Fiscal" />
                     <Form>
                         <FormGroup>
                             <Label name="Nome">
@@ -146,7 +147,7 @@ const ClassificacaoFiscal = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista Classificação Fiscal" />
+                    <Titulo title="Listar Classificação Fiscal" />
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -173,10 +174,10 @@ const ClassificacaoFiscal = () => {
                             {currentItems.map((item, index) => (
                                 <Tr key={index}>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                                        <FaTrash clasName="delete" onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}

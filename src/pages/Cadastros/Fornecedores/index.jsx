@@ -19,6 +19,7 @@ import Th from '../../../components/Th'
 import Tbody from '../../../components/Tbody'
 import Td from '../../../components/Td'
 import Pagination from '../../../components/Pagination'
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa'
 
 const data = new Date();
 var mes = ("0" + (data.getMonth() + 1)).slice(-2);
@@ -125,6 +126,8 @@ const Fornecedores = () => {
                     }
                 })
         } else {
+
+            console.log(fornecedor);
             const id = fornecedor.id;
             fetch(`http://localhost:8080/api/fornecedor/${id}`, {
                 method: "PUT",
@@ -172,7 +175,7 @@ const Fornecedores = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro de fornecedor" />
+                    <Titulo title="Cadastrar Fornecedor" />
                     <Form>
                         <FormGroup>
                             <Label name="Tipo Pessoa">
@@ -280,7 +283,7 @@ const Fornecedores = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista de fornecedores" />
+                    <Titulo title="Listar Fornecedor" />
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -312,10 +315,10 @@ const Fornecedores = () => {
                                     <Td>{item.nome}</Td>
                                     <Td>{item.cnpjCpf}</Td>
                                     <Td>{item.rgInscricaoEstadual}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn' /> : <FaToggleOff className='toggleOff' />}</Td>
                                     <Td>
-                                        <Button classe="botao editar" name="Editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button classe="botao remover" name="Excluir" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className='edit' onClick={() => handleUpdate(item.id)} />
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)} />
                                     </Td>
                                 </Tr>
                             ))}

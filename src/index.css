@@ -82,3 +82,35 @@ tfoot > tr {
   background-color: #0062cc;
   color: #fff;
 }
+.acessar{
+  background-color: #273c75;
+  border: 1px solid #273c75;
+  color: rgb(255,255,255)
+}
+
+.toggleOn{
+  margin-left: 10px;
+  font-size: 20px;
+  color: #4CAF50;
+}
+
+.toggleOff{
+  font-size: 20px;
+  margin-left: 10px;
+}
+.edit{
+  cursor: pointer;
+ margin-left: 5px;
+}
+.delete{
+  cursor: pointer;
+  margin-left: 5px;
+
+}
+.view{
+  cursor: pointer;
+}
+.required:after {
+  content:" *"; 
+  color: red;
+}

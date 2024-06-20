@@ -18,6 +18,7 @@ import Tr from '../../../components/Tr';
 import Th from '../../../components/Th';
 import Tbody from '../../../components/Tbody';
 import Td from '../../../components/Td';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 
 const initialForms = ({ id: 0, codigo: '', nome: '' })
@@ -128,7 +129,7 @@ const FormaPagamento = () => {
     <>
       <Container>
         <Main>
-          <Titulo title="Cadastro forma pagamento" />
+          <Titulo title="Cadastrar Forma Pagamento" />
           <Form>
             <FormGroup>
               <Label name="Código">
@@ -145,7 +146,7 @@ const FormaPagamento = () => {
           </Form >
         </Main>
         <Main>
-          <Titulo title="Lista formas pagamento" />
+          <Titulo title="Listar Forma Pagamento" />
           <Navigator>
             <FormGroup>
               <Label>
@@ -174,8 +175,8 @@ const FormaPagamento = () => {
                   <Td>{item.codigo}</Td>
                   <Td>{item.nome}</Td>
                   <Td>
-                    <Button name="Editar" onclick={() => handleUpdate(item.id)} classe="botao editar" />
-                    <Button name="Excluir" onclick={() => handleDelete(item.id)} classe="botao remover" />
+                    <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                    <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                   </Td>
                 </Tr>
               ))}

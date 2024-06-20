@@ -18,6 +18,7 @@ import Td from '../../../components/Td';
 import Navigator from '../../../components/Navigator';
 import Select from '../../../components/Select';
 import Pagination from '../../../components/Pagination';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 const fetchData = async () => {
     const res = await fetch("http://localhost:8080/api/corproduto");
@@ -179,10 +180,10 @@ const CorProduto = () => {
                             {currentItems.map((item) => (
                                 <Tr key={item.id}>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}

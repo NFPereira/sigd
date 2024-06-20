@@ -16,6 +16,7 @@ import Input from '../../../components/Input';
 import Pagination from '../../../components/Pagination';
 import Navigator from '../../../components/Navigator';
 import Select from  '../../../components/Select';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const initialForms = ({ id: 0, codigo: '', nome: '' });
 const Natureza = () => {
@@ -122,7 +123,7 @@ const Natureza = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro Natureza Operação" />
+                    <Titulo title="Cadastrar Natureza Operação" />
                     <Form>
                         <FormGroup>
                             <Label name="Código">
@@ -139,7 +140,7 @@ const Natureza = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista Natureza Operação" />
+                    <Titulo title="Listar Natureza Operação" />
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -168,8 +169,8 @@ const Natureza = () => {
                                     <Td>{item.codigo}</Td>
                                     <Td>{item.nome}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                    <FaEdit className='edit' onClick={() => handleUpdate(item.id)}/>
+                                    <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}

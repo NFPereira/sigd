@@ -1,0 +1,18 @@
+.boxLogin{
+    max-width: 500px;
+    border-radius: 5px;
+    flex-flow: column;
+    padding: 5rem 5rem;
+    display: flex;
+    margin: 180px auto;
+    background-color: #fff;
+    box-shadow:rgb(225, 231, 234) 0px 0px 14px 1px;
+
+}
+.boxTitle{
+    font-size: 1.2rem;
+    color: #273c75;
+    text-transform: uppercase;
+    position: relative;
+    font-weight: 700;
+}

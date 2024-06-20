@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './styles.module.css';
 
-const Tr = ({ children }) => {
+const Tr = ({onclick, children }) => {
     return (
-        <tr>{children}</tr>
+        <tr onClick={onclick}>{children}</tr>
     )
 }
 

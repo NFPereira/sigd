@@ -1,5 +1,8 @@
 import { useEffect, useState, useTransition } from 'react'
 import styles from './styles.module.css'
+
+
+//import components
 import Titulo from '../../../components/Titulo';
 import Form from '../../../components/Form';
 import Button from '../../../components/Button';
@@ -20,16 +23,20 @@ import Navigator from '../../../components/Navigator';
 import Select from '../../../components/Select';
 import Pagination from '../../../components/Pagination';
 
+//import icons
+import { FaEye, FaPrint, FaRegEdit, FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
+
 const initialForms = ({ id: 0, codigo: '', nome: '', sigla: '', ativo: true })
 
 const Paises = () => {
     const [items, setItems] = useState([]);
     const [pais, setPais] = useState(initialForms);
+    const [erro, setErro] = useState("");
 
     const getPais = async () => {
-        await fetch("http://localhost:8080/api/Pais/")
-            .then((response) => { return response.json(); })
-            .then((data) => setItems(data))
+        await fetch(`http://localhost:8080/api/Pais/`)
+        .then((response) => { return response.json(); })
+        .then((data) => setItems(data))
     }
 
     useEffect(() => {
@@ -45,8 +52,6 @@ const Paises = () => {
 
     const pages = Math.ceil(items.length / itemsPerPage);
 
-
-
     const handleRadio = (e) => {
         const isSelected = e.target.value === 'true' ? true : false;
         setPais({ ...pais, ativo: isSelected });
@@ -60,11 +65,30 @@ const Paises = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(pais.codigo === ''){
+            setErro("Informe o código.");
+            setTimeout(()=>{
+                setErro("");
+            },2000)
+            return;
+        }
+        else if(pais.nome === ''){
+            setErro("Informe o nome.");
+            setTimeout(()=>{
+                setErro("");
+            },2000)
+            return;
+        }
+        else if(pais.sigla === ''){
+            setErro("Informe a sigla.");
+            setTimeout(()=>{
+                setErro("");
+            },2000)
+            return;
+        }
 
         if (pais.id === 0) {
-
-            const url = "http://localhost:8080/api/Pais/";
-            fetch(url, {
+            fetch(`http://localhost:8080/api/Pais/`, {
                 method: "POST",
                 body: JSON.stringify(pais),
                 mode: "cors",
@@ -73,19 +97,17 @@ const Paises = () => {
                     "Accept": "application/json",
                 },
             })
-                .then(response => response.json())
-                .then((data) => {
-                    if (data) {
-                        getPais();
-                    }
-                })
-                .catch((error) => console.log("Erro ao cadastrar" + error));
+            .then(response=>response.json())
+            .then((data) => {
+                if (data) {
+                    getPais();
+                }
+            })
+            .catch((error) => console.log("Erro ao cadastrar" + error));
         }
         else {
             const id = pais.id;
-            const url = `http://localhost:8080/api/Pais/${id}`;
-
-            fetch(url, {
+            fetch(`http://localhost:8080/api/Pais/${id}`, {
                 method: "PUT",
                 body: JSON.stringify(pais, id),
                 mode: "cors",
@@ -94,44 +116,35 @@ const Paises = () => {
                     "Accept": "application/json",
                 },
             })
-                .then(response => response.json())
-                .then((data) => {
-                    if (data) {
-                        getPais();
-                    }
-                })
-                .catch((error) => console.log("Erro ao cadastrar" + error));
-        }
-        setPais(initialForms);
-
-    }
-
-    const handleEdit = (id) => {
-        const url = `http://localhost:8080/api/Pais/${id}`;
-
-        fetch(url)
-            .then((response) => {
-                return response.json()
-            })
-            .then(data => setPais(data));
-    }
-
-    const handleDelete = (id) => {
-        const url = `http://localhost:8080/api/Pais/${id}`;
-
-        fetch(url, {
-            method: "DELETE"
-        }).then((response) => {
-            return response.json();
-
-        })
+            .then(response => response.json())
             .then((data) => {
                 if (data) {
                     getPais();
-                    setPais(initialForms);
-                    setCurrentPage(0);
                 }
             })
+            .catch((error) => console.log("Erro ao cadastrar" + error));
+        }
+        setPais(initialForms);
+    }
+
+    const handleUpdate = (id) => {
+        fetch(`http://localhost:8080/api/Pais/${id}`)
+        .then(response=>response.json())
+        .then(data => setPais(data));
+    }
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:8080/api/Pais/${id}`, {
+            method: "DELETE"
+        })
+        .then(responseresponse.json())
+        .then((data) => {
+            if (data) {
+                getPais();
+                setPais(initialForms);
+                setCurrentPage(0);
+            }
+        });
     }
 
     const handleCancel = (e) => {
@@ -147,19 +160,22 @@ const Paises = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastros de país" />
+                    <Titulo title="Cadastros Paises" />
                     <Form>
                         <FormGroup>
                             <Label name="Código">
-                                <Input type="text" value={pais.codigo} name="codigo" placeholder="Informe o código" onchange={handleChange} />
+                                {erro &&(
+                                    <span className={styles.mensagem}>{erro}</span>
+                                )}
+                                <Input type="text" max={10} value={pais.codigo} name="codigo" placeholder="Informe o código" onchange={handleChange} />
                             </Label>
                         </FormGroup>
                         <FormGroup>
                             <Label name="Nome">
-                                <Input type="text" value={pais.nome} name="nome" placeholder="Informe o nome" onchange={handleChange} />
+                                <Input type="text" max={80} value={pais.nome} name="nome" placeholder="Informe o nome" onchange={handleChange} />
                             </Label>
                             <Label name="Sigla">
-                                <Input type="text" value={pais.sigla} name="sigla" placeholder="Informe a sigla" onchange={handleChange} />
+                                <Input type="text" max={2} value={pais.sigla} name="sigla" placeholder="Informe a sigla" onchange={handleChange} />
                             </Label>
                         </FormGroup>
                         <FormRadio>
@@ -172,7 +188,7 @@ const Paises = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista de paises" />
+                    <Titulo title="Lista Paises" icon={<FaPrint/>}/>
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -204,10 +220,11 @@ const Paises = () => {
                                     <Td>{item.codigo}</Td>
                                     <Td>{item.nome}</Td>
                                     <Td>{item.sigla}</Td>
-                                    <Td>{item.ativo ? "SIM" : "NÃO"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn' /> : <FaToggleOff className='toggleOff'/> }</Td>
                                     <Td>
-                                        <Button id="btn-editar" name="Editar" onclick={() => handleEdit(item.id)} classe="botao editar" />
-                                        <Button id="btn-excluir" name="Excluir" onclick={() => handleDelete(item.id)} classe="botao remover" />
+                                        <FaEye className='view'/>
+                                    <FaRegEdit onClick={()=>handleUpdate(item.id)} className='edit'/>
+                                    <FaTrash onClick={() => handleDelete(item.id)} className='delete'/>
                                     </Td>
                                 </Tr>
 

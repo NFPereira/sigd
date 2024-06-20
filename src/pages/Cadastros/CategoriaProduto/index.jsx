@@ -18,6 +18,7 @@ import Td from '../../../components/Td';
 import Pagination from '../../../components/Pagination';
 import Navigator from '../../../components/Navigator';
 import Select from '../../../components/Select';
+import { FaEdit, FaToggleOff, FaToggleOn, FaTrash } from 'react-icons/fa';
 
 
 const initialForms = ({ id: 0, nome: '', ativo: true });
@@ -129,7 +130,7 @@ const CategoriaProduto = () => {
         <>
             <Container>
                 <Main>
-                    <Titulo title="Cadastro Categoria de Produto" />
+                    <Titulo title="Cadastrar Categoria de Produto" />
                     <Form>
                         <FormGroup>
                             <Label name="Nome">
@@ -146,7 +147,7 @@ const CategoriaProduto = () => {
                     </Form>
                 </Main>
                 <Main>
-                    <Titulo title="Lista Categorias de Produtos" />
+                    <Titulo title="Listar Categoria de Produto" />
                     <Navigator>
                         <FormGroup>
                             <Label>
@@ -173,10 +174,10 @@ const CategoriaProduto = () => {
                             {currentItems.map((item, index) => (
                                 <Tr key={index}>
                                     <Td>{item.nome}</Td>
-                                    <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                                    <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                                     <Td>
-                                        <Button name="Editar" classe="botao editar" onclick={() => handleUpdate(item.id)} />
-                                        <Button name="Excluir" classe="botao remover" onclick={() => handleDelete(item.id)} />
+                                        <FaEdit className="edit" onClick={() => handleUpdate(item.id)}/>
+                                        <FaTrash className='delete' onClick={() => handleDelete(item.id)}/>
                                     </Td>
                                 </Tr>
                             ))}

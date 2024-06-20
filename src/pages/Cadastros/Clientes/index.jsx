@@ -20,6 +20,10 @@ import Td from '../../../components/Td';
 import Navigator from '../../../components/Navigator';
 import Pagination from '../../../components/Pagination';
 
+
+//import icons
+import { FaEdit, FaRegEdit, FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
+
 const data = new Date();
 var mes = ("0" + (data.getMonth() + 1)).slice(-2);
 const dataAtual = data.getFullYear() + '-' + mes + '-' + data.getDate();
@@ -184,6 +188,7 @@ const Clientes = () => {
         if (data) {
           getClientes();
           setClientes(initialForms);
+          setCurrentPage(0);
         }
       })
   }
@@ -199,7 +204,7 @@ const Clientes = () => {
     <>
       <Container>
         <Main>
-          <Titulo title="Cadastro de cliente" />
+          <Titulo title="Cadastrar Cliente" />
           <Form>
             <FormGroup>
               <Label name="Tipo Pessoa">
@@ -307,7 +312,7 @@ const Clientes = () => {
         </Main>
 
         <Main>
-          <Titulo title="Listas de Clientes" />
+          <Titulo title="Listar Cliente" />
           <Navigator>
             <FormGroup>
               <Label>
@@ -321,7 +326,6 @@ const Clientes = () => {
                 <Input type="text" name="pesquisar" placeholder="Pesquisar" />
               </Label>
             </FormGroup>
-
           </Navigator>
           <Table classe="tabela">
             <Thead>
@@ -341,10 +345,10 @@ const Clientes = () => {
                   <Td>{new Date(item.dataNascimento).toLocaleDateString('pt-BR')}</Td>
                   <Td>{Number(item.idTipoPessoa) === 1 ? "CPF: ": "CNPJ: "}{item.cnpjCpf}</Td>
                   <Td>{item.rgInscricaoEstadual}</Td>
-                  <Td>{item.ativo ? "Sim" : "Não"}</Td>
+                  <Td>{item.ativo ? <FaToggleOn className='toggleOn'/> : <FaToggleOff className='toggleOff'/>}</Td>
                   <Td>
-                    <Button name="Editar" onclick={() => handleUpdate(item.id)} classe="botao editar" />
-                    <Button name="Excluir" onclick={() => handleDelete(item.id)} classe="botao remover" />
+                    <FaEdit className='edit' onClick={() => handleUpdate(item.id)} />
+                    <FaTrash className='delete' onClick={() => handleDelete(item.id)} />
                   </Td>
                 </Tr>
               ))}
